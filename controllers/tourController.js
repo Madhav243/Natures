@@ -1,13 +1,20 @@
-const tourManager = require('../managers/tourManager');
 
 
+const fs = require('fs');
+
+const tours = JSON.parse(
+  fs.readFileSync(`${__dirname}/../dev-data/data/tours-simple.json`)
+);
 const getAllTours= async (req,res)=>{
     try{
-        const data = await tourManager.getAllTours();
-        return res.status(200).json({
-            'status':'success',
-            'data':data
-        });
+        res.status(200).json({
+            status: 'success',
+            requestedAt: req.requestTime,
+            results: tours.length,
+            data: {
+              tours
+            }
+          });
     }catch(err){
         return res.status(500).json({
             'status':'error',
@@ -19,11 +26,16 @@ const getAllTours= async (req,res)=>{
 
 const getTour = async (req,res)=>{
     try{
-        const data = await tourManager.getTour(req.params.id);
-        return res.status(200).json({
-            'status':'success',
-            'data':data
-        });
+        const id = req.params.id * 1;
+
+  const tour = tours.find(el => el.id === id);
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      tour
+    }
+  });
     }catch(err){
         return res.status(500).json({
             'status':'error',
