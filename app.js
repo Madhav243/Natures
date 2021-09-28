@@ -1,20 +1,31 @@
 const express = require('express');
+const morgan = require('morgan');
 
-const app= express();
-const routes = require('./routes');
-// const bodyParser = require('body-parser');
-// app.use(bodyParser.urlencoded({extended:false}));
-// app.use(bodyParser.json());
-// or
-app.use(express.json()); // middleware to add body to request
+const tourRouter = require('./routes/tourRoutes');
+const userRouter = require('./routes/userRoutes');
 
+const app = express();
 
-app.use('/',routes);
+// 1) MIDDLEWARES
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
+}
 
-const port = 3000;
+app.use(express.json());
+app.use(express.static(`${__dirname}/public`));
 
-
-app.listen(port,(err)=>{
-    if(err) console.log(`Error : ${err}`);
-    else console.log(`App is running on the port ${port}`);
+app.use((req, res, next) => {
+  console.log('Hello from the middleware 👋');
+  next();
 });
+
+app.use((req, res, next) => {
+  req.requestTime = new Date().toISOString();
+  next();
+});
+
+// 3) ROUTES
+app.use('/api/v1/tours', tourRouter);
+app.use('/api/v1/users', userRouter);
+
+module.exports = app;
