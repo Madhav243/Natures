@@ -6,16 +6,18 @@
   "scripts": {
     "start:dev": "nodemon server.js",
     "start:prod": "NODE_ENV=production nodemon server.js",
-    "debugger":"ndb run server.js"
+    "debugger": "ndb run server.js"
   },
   "author": "Madhav Verma",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "dotenv": "^7.0.0",
     "express": "^4.16.4",
     "mongoose": "^5.13.9",
     "morgan": "^1.9.1",
-    "slugify": "^1.6.0"
+    "slugify": "^1.6.0",
+    "validator": "^13.6.0"
   },
   "devDependencies": {
     "eslint": "^5.16.0",
