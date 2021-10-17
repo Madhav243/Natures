@@ -210,7 +210,7 @@ if (!(await user.correctPassword(req.body.passwordCurrent, user.password))) {
 user.password = req.body.password;
 user.passwordConfirm = req.body.passwordConfirm;
 await user.save();
-// User.findByIdAndUpdate will NOT work as intended!
+// User.findByIdAndUpdate will NOT work !
 
 // 4) Log user in, send JWT
 createSendToken(user, 200, res);
