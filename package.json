@@ -4,9 +4,9 @@
   "description": "Learning node, express and mongoDB",
   "main": "app.js",
   "scripts": {
-    "start:dev": "nodemon server.js",
+    "start": "nodemon server.js",
     "start:prod": "NODE_ENV=production nodemon server.js",
-    "debugger": "ndb run server.js"
+    "debug": "ndb server.js"
   },
   "author": "Madhav Verma",
   "license": "ISC",
