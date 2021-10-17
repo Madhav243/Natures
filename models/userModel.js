@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
+const crypto= require('crypto');
+
+
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -58,7 +61,13 @@ const userSchema = new mongoose.Schema({
     this.passwordConfirm = undefined;
     next();
   });
-  
+  userSchema.pre('save', function(next) {
+    if (!this.isModified('password') || this.isNew) return next(); //isNew check if there is new user created then we dont need changedPasswordAt property
+
+    this.passwordChangedAt = Date.now() - 1000; // subtracting 1 sec for processing time
+    next();
+  });
+
   userSchema.pre(/^find/, function(next) {
     // this points to the current query
     this.find({ active: { $ne: false } });
@@ -81,7 +90,20 @@ const userSchema = new mongoose.Schema({
     return false;
   };
 
-
+  userSchema.methods.createPasswordResetToken = function() {
+    const resetToken = crypto.randomBytes(32).toString('hex');
+  
+    this.passwordResetToken = crypto
+      .createHash('sha256')
+      .update(resetToken)
+      .digest('hex');
+  
+    // console.log({ resetToken }, this.passwordResetToken);
+  
+    this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
+  
+    return resetToken;
+  };
 
   const User = mongoose.model('User', userSchema);
 
