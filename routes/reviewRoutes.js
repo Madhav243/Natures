@@ -12,8 +12,7 @@ router
   .post(
     authController.restrictTo('user'),
     reviewController.setTourUserIds,
-    reviewController.createReview
-  );
+    reviewController.createReview);
 
 router
   .route('/:id')
