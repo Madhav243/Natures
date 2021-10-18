@@ -13,7 +13,7 @@ const filterObj = (obj, ...allowedFields) => {
 };
 
 const getMe = (req, res, next) => {
-  req.params.id = req.user.id;
+  req.params.id = req.user.id; //faking that id is getting from URL
   next();
 };
 

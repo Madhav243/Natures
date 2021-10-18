@@ -2,7 +2,7 @@ const express = require('express');
 const reviewController = require('./../controllers/reviewController');
 const authController = require('./../controllers/authController');
 
-const router = express.Router({ mergeParams: true });
+const router = express.Router({ mergeParams: true }); // get access to params of other routers (example api/v1/tours/:tourId/reviews  get access to tourId param using mergeParams) 
 
 router.use(authController.protect);
 
