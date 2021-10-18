@@ -18,13 +18,13 @@ const createSendToken = (user, statusCode, res) => {
       expires: new Date(
         Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
       ),
-      httpOnly: true
+      httpOnly: true // cannot be modified by browser (to prevent XSS Attacks)
     };
     if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
   
     res.cookie('jwt', token, cookieOptions);
   
-    // Remove password from output
+    // Remove password from output, not from database
     user.password = undefined;
   
     res.status(statusCode).json({
