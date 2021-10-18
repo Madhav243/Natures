@@ -4,7 +4,7 @@ const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const morgan = require('morgan');
-const hpp = require('hpp');
+const hpp = require('hpp');// http parameter pollution
 
 
 const AppError = require('./utils/appError');
@@ -45,7 +45,7 @@ app.use(xss());
 // Prevent parameter pollution
 app.use(
   hpp({
-    whitelist: [
+    whitelist: [ // array of strings in which we allow duplicates in query string
       'duration',
       'ratingsQuantity',
       'ratingsAverage',
@@ -69,6 +69,7 @@ app.use((req, res, next) => {
 // 3) ROUTES
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
+app.use('/api/v1/reviews', reviewRouter);
 
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
