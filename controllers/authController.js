@@ -72,6 +72,8 @@ const protect = catchAsync(async (req, res, next) => {
   let token;
   if (req.headers.authorization && req.headers.authorization.startsWith('Bearer') ) {
     token = req.headers.authorization.split(' ')[1];
+  }else if (req.cookies.jwt) {
+    token = req.cookies.jwt;
   }
 
   if (!token) {
@@ -107,6 +109,13 @@ const protect = catchAsync(async (req, res, next) => {
   next();
 });
 
+const logout = (req, res) => {
+  res.cookie('jwt', 'loggedout', {
+    expires: new Date(Date.now() + 10 * 1000),
+    httpOnly: true
+  });
+  res.status(200).json({ status: 'success' });
+};
 
 const restrictTo = (...roles) => { //wrapper function because we cannot send argumnts in middleware (middleware arguments is only error)
   return (req, res, next) => {
@@ -216,4 +225,13 @@ await user.save();
 createSendToken(user, 200, res);
 });
 
-module.exports={ signup, login, protect,restrictTo,forgotPassword,resetPassword,updatePassword};
+module.exports={ 
+  signup,
+  login,
+  protect,
+  restrictTo,
+  forgotPassword,
+  resetPassword,
+  updatePassword,
+  logout
+};
