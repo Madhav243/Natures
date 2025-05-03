@@ -1,10 +1,3 @@
-<h1 align="center">
-  <br>
-  <a href="https://www.natours.dev/"><img src="https://github.com/lgope/Natours/blob/master/public/img/logo-green-round.png" alt="Natours" width="200"></a>
-  <br>
-  Natours
-  <br>
-</h1>
 
 <h4 align="center">An awesome tour booking site built on top of <a href="https://nodejs.org/en/" target="_blank">NodeJS</a>.</h4>
 
@@ -23,8 +16,6 @@
   <a href="#acknowledgement">Acknowledgement</a>
 </p>
 
-## Deployed Version
-Live demo (Feel free to visit) 👉 : https://www.natours.dev/
 
 
 ## Key Features
@@ -94,18 +85,6 @@ Before using the API, you need to set the variables in Postman depending on your
   - {{password}} with your user password as value.
   ```
 
-Check [Natours API Documentation](https://documenter.getpostman.com/view/8689170/SVmzvwpY?version=latest) for more info.
-
-<b> API Features: </b>
-
-Tours List 👉 https://www.natours.dev/api/v1/tours
-
-Tours State 👉 https://www.natours.dev/api/v1/tours/tour-stats
-
-Get Top 5 Cheap Tours 👉 https://www.natours.dev/api/v1/tours/top-5-cheap
-
-Get Tours Within Radius 👉 https://www.natours.dev/api/v1/tours/tours-within/200/center/34.098453,-118.096327/unit/mi
-
 
 
 ## Deployment
@@ -114,17 +93,7 @@ The website is deployed with git into heroku. Below are the steps taken:
 git init
 git add -A
 git commit -m "Commit message"
-heroku login
-heroku create
-heroku config:set CONFIG_KEY=CONFIG_VALUE
-parcel build ./public/js/index.js --out-dir ./public/js --out-file bundle.js
-git push heroku master
-heroku open
-```
-You can also changed your website url by running this command:
-```
-heroku apps:rename natours-users
-```
+
 
 
 ## Build With
